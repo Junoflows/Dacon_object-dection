@@ -1,0 +1,71 @@
+grayscale
+
+(imgsz=640, epochs=100, batch=32, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-3)
+
+train 28 iou = 0.2 conf = 0.65 76점
+train 28 iou = 0.2 conf = 0.7 75점
+
+(imgsz=1024, epochs=100, batch=16, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-4)
+
+train 37 iou = 0.2 conf = 0.5 87.789점
+train 37 iou = 0.7 conf = 0.5 87.789점
+
+(imgsz=1024, epochs=200, batch=16, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-4)
+
+train 40 iou = 0.2 conf = 0.5 91.972점
+train 40 iou = 0.7 conf = 0.5 91.971점
+train 40 iou = 0.7 conf = 0.6 91.574점
+
+train 40 93.323점
+train 40 iou = 0.2 93.326점
+train 40 iou = 0.7 93.323점
+
+(imgsz=1024, epochs=200, batch=8, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-3)
+
+train 49 
+train 49 conf = 0.5
+train 49 conf = 0.7
+
+(imgsz=1024, epochs=300, batch=16, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-4)
+
+train 48 93.823점
+train 48 conf = 0.5 93.693점
+train 48 conf = 0.7 93.001점
+
+GRAY300_08_2 0.5
+GRAY300_08_2 0.7
+
+(imgsz=1024, epochs=400, batch=16, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-4)
+
+COLOR
+
+(imgsz=1024, epochs=200, batch=8, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-3)
+
+train34 iou = 0.2 conf = 0.5 84.69점
+train34 iou = 0.2 conf = 0.65 83.66점
+train34 iou = 0.7 conf = 0.5 84.78점
+
+(imgsz=1024, epochs=200, batch=16 optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-4)
+
+train41 iou = 0.2 conf = 0.5 81.52점
+train41 iou = 0.7 conf = 0.5 81.52점
+train41 83.071점
+
+
+(imgsz=1024, epochs=200, batch=16 optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-3)
+
+train47 77.731점
+train47 iou = 0.2 76.029점
+
+(imgsz=1024, epochs=300, batch=8, optimizer="Adam", 
+patience = 5, workers = 16, lr0 = 1e-3)
+
