@@ -1,6 +1,6 @@
 # Dacon_object-dection
 
-## 파라미터 조정값에 따른 결과 비교color version
+## 파라미터 조정값에 따른 결과 비교
 ### grayscale
 + (imgsz=640, epochs=100, batch=32, optimizer="Adam", patience = 5, workers = 16, lr0 = 1e-3)
 iou = 0.2 conf = 0.7 75점
