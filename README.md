@@ -32,30 +32,50 @@
 
 ## 데이터 Yolo 형식으로 바꾸기
 ```
-def make_yolo_dataset(image_paths, txt_paths, type="train"):
-    for image_path, txt_path in tqdm(zip(image_paths, txt_paths if not type == "test" else image_paths), total=len(image_paths)):
-        source_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)        
-        image_height, image_width = source_image.shape
-        
-        target_image_path = f"/home/jrkim/songjunho/object_detection/dacon2/{type}/{os.path.basename(image_path)}"
-        cv2.imwrite(target_image_path, source_image)
-        
-        if type == "test":
-            continue
-        
-        with open(txt_path, "r") as reader:
-            yolo_labels = []
-            for line in reader.readlines():
-                line = list(map(float, line.strip().split(" ")))
-                class_name = int(line[0])
+img = plt.imread('/home/jrkim/songjunho/object_detection/train/syn_00000.png')
+image_height, image_width, _ = img.shape
+with open('/home/jrkim/songjunho/object_detection/train/syn_00000.txt') as reader:
+    yolo_labels = []
+    for line in reader.readlines():
+        line = list(map(float, line.strip().split(" ")))
+        class_name = int(line[0])
+        x_min, y_min = float(min(line[1], line[3],line[5],line[7])), float(min(line[2], line[4], line[6], line[8]))
+        x_max, y_max = float(max(line[1], line[3],line[5],line[7])), float(max(line[2], line[4], line[6], line[8]))
+        x, y = float(((x_min + x_max) / 2) / image_width), float(((y_min + y_max) / 2) / image_height)
+        w, h = abs(x_max - x_min) / image_width, abs(y_max - y_min) / image_height
+        yolo_labels.append(f"{class_name} {x} {y} {w} {h}")
+ 
+for label in yolo_labels:
+    x, y, w, h = label.split(' ')[1:]
+    x, y, w, h = float(x), float(y), float(w), float(h)
+    start_x, start_y = x - w/2, y - h/2
+    start_x, start_y, w, h = start_x*image_width, start_y*image_height, w*image_width, h*image_height
+    
+    rect = patches.Rectangle((start_x, start_y), w, h, linewidth = 1, edgecolor = 'lime', facecolor = 'none')
+    ax.add_patch(rect)    
+
+yolo_labels
 
 ```
+['9 0.61171875 0.3158653846153846 0.14322916666666666 0.2298076923076923', <br/>
+ '25 0.5028645833333333 0.5807692307692308 0.16822916666666668 0.34423076923076923', <br/>
+ '12 0.23776041666666667 0.3658653846153846 0.13177083333333334 0.25096153846153846'] <br/>
+
++ class, center_x, center_y, width, height 으로 구성(YOLO format)
+
+## Grayscale 이미지 변환
++ 자동차를 구분할 때 형태로만 구분하고 색은 영향을 미치지 않을 것으로 예상
++ 전체 이미지에 회색조를 적용하면 더 정확한 분류를 하지 않을까?
++ 전체 이미지에 Grayscale 적용
+
+![image](https://github.com/Junoflows/Dacon_object-dection/assets/108385417/a75cceaa-93d9-4a2a-8bfc-c3d03e7417ca)
 
 
-## 
-
-
-        는 연습을 할 수 있었음.
+## 결과 및 리뷰
+데이콘 리더보드 기준 4% 안에 든 33등으로 학업과 병행하여 마지막에는 시험기간과 겹쳐 온전히 집중하지 못한 아쉬움이 남는 공모전  
+객체 탐지는 처음 해보는 분야였지만 Faster-RCNN 과 YOLO 의 차이를 공부하고 논문으로 모델을 이해하는 연습을 할 수 있었음
++ 데이콘 리더보드 기준 4% 안에 든 33등으로 학업과 병행하여 마지막에는 시험기간과 겹쳐 온전히 집중하지 못한 아쉬움이 남는 공모전.  
++ 객체 탐지는 처음 해보는 분야였지만 Faster-RCNN 과 YOLO 의 차이를 공부하고 모델을 적용하는 연습을 할 수 있었음.
 + 구하기 힘든 데이터로 객체 탐지를 해볼 수 있는 좋은 경험이었음.
 
 ## 파라미터 조정값에 따른 결과 비교
@@ -91,10 +111,10 @@ iou = 0.2  conf = 0.7 76.029점
 
 
 ## epochs 에 따른 정확도 비교 (파일이 삭제돼서 이미지 파일 추후 업로드 예정)
-<그래프>
 + epochs이 커질수록 train 셋은 정확도가 높아지지만 valid 셋에서는 그렇지 않음 (overfitting)
 + 학습률과 배치도 비교해봐야겠지만 epochs이 300보다 커지면 valid 셋에서는 정확도가 떨어지는 현상 발생(overfitting)
 + 이는 실험을 통해 확인해야함
++ 학습 시간 200 epochs 기준 24시간 이상 빨라짐
 
 ## color 이미지와 grayscale 적용한 이미지의 정확도 비교
 + 목적은 차 종을 분류하는 것이고 색상은 큰 의미가 없음
