@@ -21,11 +21,34 @@
 
 평가는 실제데이터를 바탕으로 진행되며, 자동차 탐지 뿐만 아니라 34가지의 자동차 세부모델까지 판별해야합니다.
 
-## 사용하던 GPU 서버 점검으로 인해 업로드 연기
+## 데이터셋 형식
+![image](https://github.com/Junoflows/Dacon_object-dection/assets/108385417/79d68e69-fe46-48ee-9032-61e59f8e77b3) <br/>
+9.0 1037 209 1312 209 1312 448 1037 448 <br/>
+25.0 804 425 1127 425 1127 783 804 783 <br/>
+12.0 330 250 583 250 583 511 330 511 <br/>
 
-## 결과 및 리뷰
-+ 데이콘 리더보드 기준 4% 안에 든 33등으로 학업과 병행하여 마지막에는 시험기간과 겹쳐 온전히 집중하지 못한 아쉬움이 남는 공모전.  
-+ 객체 탐지는 처음 해보는 분야였지만 Faster-RCNN 과 YOLO 의 차이를 공부하고 논문으로 모델을 이해하는 연습을 할 수 있었음.
++ 클래스, 각 모서리 x,y 좌표로 구성
++ Yolo 모델을 사용할 예정이므로 Yolo 형식으로 변환 필요
+
+## 데이터 Yolo 형식으로 바꾸기
+```
+def make_yolo_dataset(image_paths, txt_paths, type="train"):
+    for image_path, txt_path in tqdm(zip(image_paths, txt_paths if not type == "test" else image_paths), total=len(image_paths)):
+        source_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)        
+        image_height, image_width = source_image.shape
+        
+        target_image_path = f"/home/jrkim/songjunho/object_detection/dacon2/{type}/{os.path.basename(image_path)}"
+        cv2.imwrite(target_image_path, source_image)
+        
+        if type == "test":
+            continue
+        
+        with open(txt_path, "r") as reader:
+            yolo_labels = []
+            for line in reader.readlines():
+                line = list(map(float, line.strip().split(" ")))
+                class_name = int(line[0])
+        는 연습을 할 수 있었음.
 + 구하기 힘든 데이터로 객체 탐지를 해볼 수 있는 좋은 경험이었음.
 
 ## 파라미터 조정값에 따른 결과 비교
