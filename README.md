@@ -67,15 +67,12 @@ yolo_labels
 
 + class, center_x, center_y, width, height 으로 구성(YOLO format)
 
-## 
 ## Grayscale 이미지 변환
 + 자동차를 구분할 때 형태로만 구분하고 색은 영향을 미치지 않을 것으로 예상
 + 전체 이미지에 회색조를 적용하면 더 정확한 분류를 하지 않을까?
 + 전체 이미지에 Grayscale 적용
 
 ![image](https://github.com/Junoflows/Dacon_object-dection/assets/108385417/a75cceaa-93d9-4a2a-8bfc-c3d03e7417ca)
-
-        는 연습을 할 수 있었음.
 
 ## 결과 및 리뷰
 데이콘 리더보드 기준 4% 안에 든 33등으로 학업과 병행하여 마지막에는 시험기간과 겹쳐 온전히 집중하지 못한 아쉬움이 남는 공모전  
@@ -110,8 +107,7 @@ iou = 0.7 conf = 0.7 77.731점
 iou = 0.2  conf = 0.7 76.029점
 
 
-## epochs 에 따른 정확도 비교 (파일이 삭제돼서 이미지 파일 추후 업로드 예정)
-<그래프>
+## epochs 에 따른 정확도 비교
 + epochs이 커질수록 train 셋은 정확도가 높아지지만 valid 셋에서는 그렇지 않음 (overfitting)
 + 학습률과 배치도 비교해봐야겠지만 epochs이 300보다 커지면 valid 셋에서는 정확도가 떨어지는 현상 발생(overfitting)
 + 이는 실험을 통해 확인해야함
@@ -128,7 +124,7 @@ iou = 0.2  conf = 0.7 76.029점
 + 처음에는 learning rate 를 높게 설정해서 학습하면서 빠르게 파라미터 튜닝을 해보고 나중에 학습률을 높여 학습하는 방법을 추천
 ## 회고(6개월 후)
 ### 👍
-+ Yolo와 Faster-RCNN 에 대한 논문을 찾아보면서 나름의 근거에 따라(논리적으로) Yolo를 사용하였다.
++ Yolo와 Faster-RCNN 에 대한 장단점을 찾아보면서 나름의 근거에 따라(논리적으로) Yolo를 사용하였다.
   + 짧은 기간에 성과를 내야하는 공모전에서 학습 속도가 빠른 Yolo 를 사용하였다.
 + Grayscale 변환하여 학습하여 정확도를 10% 이상 끌어올렸다. 아이디어의 중요성을 느꼈다.
 ### 👎
