@@ -48,6 +48,13 @@ def make_yolo_dataset(image_paths, txt_paths, type="train"):
             for line in reader.readlines():
                 line = list(map(float, line.strip().split(" ")))
                 class_name = int(line[0])
+
+```
+
+
+## 
+
+
         는 연습을 할 수 있었음.
 + 구하기 힘든 데이터로 객체 탐지를 해볼 수 있는 좋은 경험이었음.
 
