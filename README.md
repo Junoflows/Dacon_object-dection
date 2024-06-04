@@ -22,22 +22,6 @@
 
 ## 데이터 Yolo 형식으로 바꾸기
 ```
-def make_yolo_dataset(image_paths, txt_paths, type="train"):
-    for image_path, txt_path in tqdm(zip(image_paths, txt_paths if not type == "test" else image_paths), total=len(image_paths)):
-        source_image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)        
-        image_height, image_width = source_image.shape
-        
-        target_image_path = f"/home/jrkim/songjunho/object_detection/dacon2/{type}/{os.path.basename(image_path)}"
-        cv2.imwrite(target_image_path, source_image)
-        
-        if type == "test":
-            continue
-        
-        with open(txt_path, "r") as reader:
-            yolo_labels = []
-            for line in reader.readlines():
-                line = list(map(float, line.strip().split(" ")))
-                class_name = int(line[0])
 img = plt.imread('/home/jrkim/songjunho/object_detection/train/syn_00000.png')
 image_height, image_width, _ = img.shape
 with open('/home/jrkim/songjunho/object_detection/train/syn_00000.txt') as reader:
@@ -50,16 +34,6 @@ with open('/home/jrkim/songjunho/object_detection/train/syn_00000.txt') as reade
         x, y = float(((x_min + x_max) / 2) / image_width), float(((y_min + y_max) / 2) / image_height)
         w, h = abs(x_max - x_min) / image_width, abs(y_max - y_min) / image_height
         yolo_labels.append(f"{class_name} {x} {y} {w} {h}")
- 
-for label in yolo_labels:
-    x, y, w, h = label.split(' ')[1:]
-    x, y, w, h = float(x), float(y), float(w), float(h)
-    start_x, start_y = x - w/2, y - h/2
-    start_x, start_y, w, h = start_x*image_width, start_y*image_height, w*image_width, h*image_height
-    
-    rect = patches.Rectangle((start_x, start_y), w, h, linewidth = 1, edgecolor = 'lime', facecolor = 'none')
-    ax.add_patch(rect)    
-yolo_labels
 ```
 ['9 0.61171875 0.3158653846153846 0.14322916666666666 0.2298076923076923', <br/>
  '25 0.5028645833333333 0.5807692307692308 0.16822916666666668 0.34423076923076923', <br/>
